@@ -30,6 +30,11 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "category_ids": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::category.category"
     }
   }
 }
