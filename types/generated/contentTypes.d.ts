@@ -707,6 +707,29 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
   };
 }
 
+export interface ApiPagePage extends Schema.CollectionType {
+  collectionName: 'pages';
+  info: {
+    singularName: 'page';
+    pluralName: 'pages';
+    displayName: '\u304A\u77E5\u3089\u305B - \u8868\u793A\u30DA\u30FC\u30B8';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    title: Attribute.String & Attribute.Required;
+    page: Attribute.String & Attribute.Required & Attribute.Unique;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::page.page', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::page.page', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
 export interface ApiTopicTopic extends Schema.CollectionType {
   collectionName: 'topics';
   info: {
@@ -727,6 +750,11 @@ export interface ApiTopicTopic extends Schema.CollectionType {
       'api::topic.topic',
       'oneToMany',
       'api::category.category'
+    >;
+    page_ids: Attribute.Relation<
+      'api::topic.topic',
+      'oneToMany',
+      'api::page.page'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -763,6 +791,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::category.category': ApiCategoryCategory;
+      'api::page.page': ApiPagePage;
       'api::topic.topic': ApiTopicTopic;
     }
   }
